@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.429" errors="0" skipped="0" tests="1" name="org.skinnyelephant.framework.systems.EntitySystemTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_31\jre\bin"/>
+    <property name="java.vm.version" value="20.6-b01"/>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."/>
+    <property name="java.vendor.url" value="http://java.sun.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="LV"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="D:\Development\Dropbox\projects\java\skinnyelephant"/>
+    <property name="java.runtime.version" value="1.6.0_31-b05"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="basedir" value="D:\Development\Dropbox\projects\java\skinnyelephant"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_31\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="surefire.real.class.path" value="C:\Users\Zinolis\AppData\Local\Temp\surefirebooter1565519014536997609.jar"/>
+    <property name="java.io.tmpdir" value="C:\Users\Zinolis\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="sun.jnu.encoding" value="Cp1257"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0_31\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\JetBrains\IntelliJ IDEA 11.1.1\bin\..\.\bin;D:\Development\Database\Oracle11g\product\11.2.0\dbhome_1\bin;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Development\Tools\svn\bin;D:\Development\Tools\svn\bin\svn.exe;D:\Development\Tools\GnuPG\pub;D:\Development\Tools\Mercs\;C:\Program Files (x86)\Android\android-sdk;C:\Program Files (x86)\Android\android-sdk\tools;C:\Program Files (x86)\Android\android-sdk\platform-tools;D:\Development\Tools\apache-ant-1.8.4/bin;D:\Development\Tools\TurtoiseGit\bin;D:\Development\Tools\TurtoiseSVN\bin;C:\MinGW\bin;D:\Development\Tools\apache-maven-3.0.3\bin;C:\Program Files\Common Files\Microsoft Shared\Windows Live;c:\program files (x86)\jetbrains\intellij idea 11.1.1\jre\jre\bin;."/>
+    <property name="surefire.test.class.path" value="D:\Development\Dropbox\projects\java\skinnyelephant\target\test-classes;D:\Development\Dropbox\projects\java\skinnyelephant\target\classes;C:\Users\Zinolis\.m2\repository\junit\junit\4.10\junit-4.10.jar;C:\Users\Zinolis\.m2\repository\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar;C:\Users\Zinolis\.m2\repository\com\google\guava\guava\13.0\guava-13.0.jar;C:\Users\Zinolis\.m2\repository\org\reflections\reflections\0.9.8\reflections-0.9.8.jar;C:\Users\Zinolis\.m2\repository\javassist\javassist\3.12.1.GA\javassist-3.12.1.GA.jar;C:\Users\Zinolis\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\Zinolis"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="file.encoding" value="Cp1257"/>
+    <property name="user.name" value="Zinolis"/>
+    <property name="java.class.path" value="D:\Development\Dropbox\projects\java\skinnyelephant\target\test-classes;D:\Development\Dropbox\projects\java\skinnyelephant\target\classes;C:\Users\Zinolis\.m2\repository\junit\junit\4.10\junit-4.10.jar;C:\Users\Zinolis\.m2\repository\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar;C:\Users\Zinolis\.m2\repository\com\google\guava\guava\13.0\guava-13.0.jar;C:\Users\Zinolis\.m2\repository\org\reflections\reflections\0.9.8\reflections-0.9.8.jar;C:\Users\Zinolis\.m2\repository\javassist\javassist\3.12.1.GA\javassist-3.12.1.GA.jar;C:\Users\Zinolis\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_31\jre"/>
+    <property name="sun.java.command" value="C:\Users\Zinolis\AppData\Local\Temp\surefirebooter1565519014536997609.jar C:\Users\Zinolis\AppData\Local\Temp\surefire7804618971379828579tmp C:\Users\Zinolis\AppData\Local\Temp\surefire3011684523310767822tmp"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="lv"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_31"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_31\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_31\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_31\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_31\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_31\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_31\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_31\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_31\jre\lib\modules\jdk.boot.jar;C:\Program Files\Java\jdk1.6.0_31\jre\classes"/>
+    <property name="java.vendor" value="Sun Microsystems Inc."/>
+    <property name="localRepository" value="C:\Users\Zinolis\.m2\repository"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase time="0.408" classname="org.skinnyelephant.framework.systems.EntitySystemTest" name="testIsProcessingRequired"/>
+</testsuite>
