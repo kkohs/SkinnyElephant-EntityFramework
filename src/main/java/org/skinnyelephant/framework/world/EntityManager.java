@@ -185,7 +185,7 @@ public class EntityManager implements Manager {
             throw new IllegalStateException("Manager not initialized");
         }
         if (!entityMap.containsKey(id)) {
-            //  throw new IllegalArgumentException("Entity with id " + id + " not registered.");
+            throw new IllegalArgumentException("Entity with id " + id + " not registered.");
         }
         return entityMap.get(id);
     }

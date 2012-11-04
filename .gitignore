@@ -166,4 +166,5 @@ pip-log.txt
 ## IntelliJ IDEA
 #################
 target
+.idea
 *.iml
