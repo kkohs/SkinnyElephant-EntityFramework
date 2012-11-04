@@ -78,6 +78,13 @@ public class EntityManager implements Manager {
         initialized = false;
     }
 
+    /** Cleans up all entities. */
+    public void cleanUp() {
+        for (Entity e : entityMap.values()) {
+            removeEntity(e);
+        }
+    }
+
     /**
      * <p>Method for registering entity to manager.</p>
      * <p>If entity contains String reference, entity is registered into referenced map. </p>
@@ -205,4 +212,10 @@ public class EntityManager implements Manager {
         }
         return entityMap.get(id);
     }
+
+    public final ImmutableSet<Entity> getAllEntities() {
+        return ImmutableSet.copyOf(entityMap.values());
+    }
+
 }
+
