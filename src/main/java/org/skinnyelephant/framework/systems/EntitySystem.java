@@ -46,8 +46,8 @@ public abstract class EntitySystem implements Disposable {
      *
      * @param world framework {@link World}
      */
-    public EntitySystem(World world) {
-        this(world, false);
+    public EntitySystem() {
+        this(false);
     }
 
     /**
@@ -56,8 +56,8 @@ public abstract class EntitySystem implements Disposable {
      * @param world   framework {@link World}
      * @param passive flag weather or not system is passive.
      */
-    public EntitySystem(World world, boolean passive) {
-        this(world, passive, false, 0);
+    public EntitySystem(boolean passive) {
+        this(passive, false, 0);
     }
 
     /**
@@ -67,8 +67,8 @@ public abstract class EntitySystem implements Disposable {
      * @param periodic flag indicating if system is periodic.
      * @param period   system processing period.
      */
-    public EntitySystem(World world, boolean periodic, float period) {
-        this(world, false, periodic, period);
+    public EntitySystem(boolean periodic, float period) {
+        this(false, periodic, period);
     }
 
     /**
@@ -79,8 +79,7 @@ public abstract class EntitySystem implements Disposable {
      * @param periodic flag indicating if system is periodic.
      * @param period   system processing period.
      */
-    public EntitySystem(World world, boolean passive, boolean periodic, float period) {
-        this.world = world;
+    public EntitySystem(boolean passive, boolean periodic, float period) {
         this.passive = passive;
         this.periodic = periodic;
         this.period = period;
@@ -161,6 +160,9 @@ public abstract class EntitySystem implements Disposable {
             return true;
         }
         return false;
+    }
 
+    public final void setWorld(World world) {
+        this.world = world;
     }
 }

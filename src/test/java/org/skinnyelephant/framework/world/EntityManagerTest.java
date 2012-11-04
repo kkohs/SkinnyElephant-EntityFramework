@@ -58,8 +58,8 @@ public class EntityManagerTest {
         e.addComponent(new TestComponent());
         e2.addComponent(new TestComponent());
         e2.addComponent(new TestComponent2());
-        EntitySystem system = new TestSystem(world);
-        EntitySystem system2 = new TestSystem2(world);
+        EntitySystem system = new TestSystem();
+        EntitySystem system2 = new TestSystem2();
         world.addSystem(system);
         world.addSystem(system2);
 
@@ -78,8 +78,8 @@ public class EntityManagerTest {
     public void testPerformance() {
         World world = new World();
         world.initialize();
-        EntitySystem system = new TestSystem(world);
-        world.addSystem(new TestSystem2(world));
+        EntitySystem system = new TestSystem();
+        world.addSystem(new TestSystem2());
         world.addSystem(system);
 
         for (int i = 0; i < 1000; i++) {
@@ -132,8 +132,8 @@ public class EntityManagerTest {
 
     private static class TestSystem extends EntitySystem {
 
-        public TestSystem(World world) {
-            super(world);
+        public TestSystem() {
+            super();
         }
 
         @Override
@@ -160,8 +160,8 @@ public class EntityManagerTest {
 
     private static class TestSystem2 extends EntitySystem {
 
-        public TestSystem2(World world) {
-            super(world);
+        public TestSystem2() {
+            super();
         }
 
         @Override

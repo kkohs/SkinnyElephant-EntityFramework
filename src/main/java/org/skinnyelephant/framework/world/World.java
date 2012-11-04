@@ -123,6 +123,7 @@ public final class World implements Disposable {
         if (!initialized) {
             throw new IllegalStateException("World has not been initialized!");
         }
+        system.setWorld(this);
         system.initialize();
         systems.add(system);
     }

@@ -29,7 +29,7 @@ public class EntitySystemTest {
     public void testIsProcessingRequired() throws Exception {
         World world = new World();
         world.initialize();
-        MockSystem system = new MockSystem(world, false, true, 50);
+        MockSystem system = new MockSystem(false, true, 50);
         world.addSystem(system);
 
 
@@ -44,8 +44,8 @@ public class EntitySystemTest {
 
     private class MockSystem extends EntitySystem {
 
-        public MockSystem(World world, boolean passive, boolean periodic, float period) {
-            super(world, passive, periodic, period);
+        public MockSystem(boolean passive, boolean periodic, float period) {
+            super(passive, periodic, period);
         }
 
         @Override
