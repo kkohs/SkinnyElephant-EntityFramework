@@ -90,6 +90,15 @@ public final class Entity implements Disposable {
         }
     }
 
+    public void removeComponent(Class<?> type) {
+        Object component = components.get(type);
+        if (component != null) {
+            world.getEntityManager().removeFromCache(this);
+            componentsIds ^= world.getComponentManager().getComponentId(component.getClass());
+            world.getEntityManager().addToCache(this);
+        }
+    }
+
     /**
      * Getter for entity reference.
      *
