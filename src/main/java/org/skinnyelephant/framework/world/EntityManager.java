@@ -23,7 +23,9 @@ import org.skinnyelephant.framework.systems.EntitySystem;
 import org.skinnyelephant.framework.util.EntityIdGenerator;
 import org.skinnyelephant.framework.util.EntityIdGeneratorImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -156,7 +158,7 @@ public class EntityManager implements Manager {
             throw new IllegalStateException("Manager not initialized");
         }
         for (EntitySystem system : world.getSystems()) {
-            if ((system.getUsedComponents() & e.getComponentsIds()) == e.getComponentsIds()) {
+            if ((system.getUsedComponents() & e.getComponentsIds()) == system.getUsedComponents()) {
                 systemCache.put(system, e);
             }
         }
@@ -172,7 +174,7 @@ public class EntityManager implements Manager {
             throw new IllegalStateException("Manager not initialized");
         }
         for (EntitySystem system : world.getSystems()) {
-            if ((system.getUsedComponents() & e.getComponentsIds()) == e.getComponentsIds()) {
+            if ((system.getUsedComponents() & e.getComponentsIds()) == system.getUsedComponents()) {
                 systemCache.remove(system, e);
             }
         }
@@ -217,5 +219,18 @@ public class EntityManager implements Manager {
         return ImmutableSet.copyOf(entityMap.values());
     }
 
+
+    public final ImmutableSet<Entity> getEntitiesByComponent(Class<?> componentType) {
+        long id = world.getComponentId(componentType);
+        if (id == 0) return null;
+        List<Entity> list = new ArrayList<Entity>();
+        for (Entity e : entityMap.values()) {
+            if ((e.getComponentsIds() & id) != 0) {
+                list.add(e);
+            }
+        }
+        return ImmutableSet.copyOf(list);
+
+    }
 }
 
