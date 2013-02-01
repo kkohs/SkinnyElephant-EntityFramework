@@ -6,16 +6,17 @@
 
 ## Usage
 
-### World
-<p>World class is base class of this framework.World class contains all systems and managers.</p> 
-<br>To initialize World simply do : </br> 
-<br>`World world = new World();`</br>
-<br>`world.initialize();`</br>
+### Core
+<p>Core class is base class of this framework, containing pretty much everything required to operate with this framework. Core class contains all systems and managers.</p> 
+<br>To initialize Core simply do : </br> 
+<br>`Core core= new Core();`</br>
+<br>`core.initialize();`</br>
 
 ### Entites
 <br>Entities basically are containers with components that are used by systems.
 <br>1. Usage 
-<br>To create new Entity call `world.createEntity()`.
+<br>To create new Entity call `core.createEntity()`.
+<br>To create new referenced  Entity call `core.createEntity("entityref")`.
 
 
 ### Components
@@ -39,13 +40,13 @@
 <br>2. Usage</br>
 <br>To designate class as EntitySystem calss should extend `EntitySystem`</br>
 <br>To add components that are required by this system, in `initialize()` method call ` addUsedComponent(.class)`
-<br>To add this EntitySystem to world simply call `world.addSystem(new EntitySystem)`
+<br>To add this EntitySystem to core simply call `core.addSystem(new EntitySystem)`
 
-<br>For default and periodic non passive systems, entities containing components used by system will pe assed via method `process(ImmutableSet<Entity> entities)`</br>
+<br>For default and periodic non passive systems, entities containing components used by system will passed via method `process(ImmutableSet<Entity> entities)`</br>
 
 ### Managers
 <br>Managers contains objects that are used by systems but ain't entities for example input processors, cameras, assets etc.
 
 <br>1. Usage
 <br> Managers should implement interface `Manager`
-<br>To add manager to world call `world.addManager(new Manager)`
+<br>To add manager to world call `core.addManager(new Manager)`
