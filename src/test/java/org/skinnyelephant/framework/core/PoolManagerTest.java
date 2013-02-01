@@ -1,4 +1,4 @@
-package org.skinnyelephant.framework.world;
+package org.skinnyelephant.framework.core;
 
 import org.junit.Test;
 import org.skinnyelephant.framework.annotations.Component;
@@ -20,23 +20,23 @@ public class PoolManagerTest {
         core.initialize();
 
         core.addSystem(new Testsystem());
-      Entity e =  core.createPooledEntity(TestCompOne.class);
+        Entity e = core.createPooledEntity(TestCompOne.class);
         TestCompOne compOne = e.getComponent(TestCompOne.class);
         core.process(0);
         core.removeEntity(e.getEntityId());
         core.process(0);
-        Entity e2 =  core.createPooledEntity(TestCompOne.class);
-        Entity e3 =  core.createPooledEntity(TestCompOne.class, TestCompTwo.class);
+        Entity e2 = core.createPooledEntity(TestCompOne.class);
+        Entity e3 = core.createPooledEntity(TestCompOne.class, TestCompTwo.class);
         core.process(0);
         core.removeEntity(e3.getEntityId());
         core.process(0);
-         core.getPoolManager().setRemovalPeriod(20);
+        core.getPoolManager().setRemovalPeriod(20);
         List<Entity> entities = new ArrayList<Entity>();
-        for(int i  = 0 ; i < 64 ;i++  ) {
-           entities.add(core.createPooledEntity(TestCompOne.class));
+        for (int i = 0; i < 64; i++) {
+            entities.add(core.createPooledEntity(TestCompOne.class));
         }
 
-        for(Entity entity : entities) {
+        for (Entity entity : entities) {
             core.removeEntity(entity.getEntityId());
         }
 
@@ -45,15 +45,15 @@ public class PoolManagerTest {
         core.process(10000);
         core.process(10000);
         core.process(10000);
-        for(int i  = 0 ; i < 24 ;i++  ) {
+        for (int i = 0; i < 24; i++) {
             entities.add(core.createPooledEntity(TestCompOne.class));
         }
 
-        for(int i  = 0 ; i < 64 ;i++  ) {
+        for (int i = 0; i < 64; i++) {
             entities.add(core.createPooledEntity(TestCompOne.class));
         }
 
-        for(Entity entity : entities) {
+        for (Entity entity : entities) {
             core.removeEntity(entity.getEntityId());
         }
         core.process(10000);
@@ -100,7 +100,7 @@ public class PoolManagerTest {
 
     }
 
-    public class Testsystem extends EntitySystem  {
+    public class Testsystem extends EntitySystem {
 
         @Override
         public void initialize() {
@@ -110,7 +110,7 @@ public class PoolManagerTest {
 
         @Override
         public void processEntity(Entity entity) {
-           entity.getEntityId();
+            entity.getEntityId();
         }
 
         @Override

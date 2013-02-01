@@ -15,7 +15,7 @@
  */
 package org.skinnyelephant.framework.util;
 
-import org.skinnyelephant.framework.world.Entity;
+import org.skinnyelephant.framework.core.Entity;
 
 import java.util.LinkedList;
 

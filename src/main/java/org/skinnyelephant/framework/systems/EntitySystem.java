@@ -17,10 +17,10 @@
 package org.skinnyelephant.framework.systems;
 
 import com.google.common.collect.ImmutableSet;
-import org.skinnyelephant.framework.world.Core;
-import org.skinnyelephant.framework.world.Disposable;
-import org.skinnyelephant.framework.world.Entity;
-import org.skinnyelephant.framework.world.Manager;
+import org.skinnyelephant.framework.core.Core;
+import org.skinnyelephant.framework.core.Disposable;
+import org.skinnyelephant.framework.core.Entity;
+import org.skinnyelephant.framework.core.Manager;
 
 /**
  * Base abstract class for entity systems.
@@ -33,7 +33,7 @@ public abstract class EntitySystem implements Disposable {
      */
     private final float period;
     /**
-     * Reference tho framework {@link org.skinnyelephant.framework.world.Core}.
+     * Reference tho framework {@link org.skinnyelephant.framework.core.Core}.
      */
     protected Core core;
     /**
@@ -105,7 +105,7 @@ public abstract class EntitySystem implements Disposable {
     public abstract void processEntity(final Entity entity);
 
     /**
-     * Method for processing Immutable set of entities passed by framework {@link org.skinnyelephant.framework.world.Core}.
+     * Method for processing Immutable set of entities passed by framework {@link org.skinnyelephant.framework.core.Core}.
      *
      * @param entities set of entities to process.
      */

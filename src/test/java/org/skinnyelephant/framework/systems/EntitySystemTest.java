@@ -17,13 +17,15 @@
 package org.skinnyelephant.framework.systems;
 
 import org.junit.Test;
-import org.skinnyelephant.framework.world.Core;
-import org.skinnyelephant.framework.world.Entity;
+import org.skinnyelephant.framework.core.Core;
+import org.skinnyelephant.framework.core.Entity;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-/** @author Kristaps Kohs */
+/**
+ * @author Kristaps Kohs
+ */
 public class EntitySystemTest {
     @Test
     public void testIsProcessingRequired() throws Exception {

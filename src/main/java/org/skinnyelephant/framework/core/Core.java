@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.skinnyelephant.framework.world;
+package org.skinnyelephant.framework.core;
 
 import org.reflections.Reflections;
 import org.skinnyelephant.framework.annotations.Component;
@@ -66,7 +66,7 @@ public final class Core implements Disposable {
     /**
      * <p>Initializes core.</p>
      * <p>In this method all packages are scanned for classes containing annotation {@link Component} and registered into core.</p>
-     * <p>Also {@link EntityManager} and {@link org.skinnyelephant.framework.world.ComponentManager#initialize()}  method is called.</p>
+     * <p>Also {@link EntityManager} and {@link org.skinnyelephant.framework.core.ComponentManager#initialize()}  method is called.</p>
      */
     public final void initialize() {
         if (initialized) {

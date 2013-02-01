@@ -14,14 +14,15 @@
  *    limitations under the License.
  */
 
-package org.skinnyelephant.framework.world;
+package org.skinnyelephant.framework.core;
 
 /**
- * Interface indicating this object can be disposed.
+ * Interface for managers in this framework.
  */
-public interface Disposable {
+public interface Manager extends Disposable {
     /**
-     * Dispose method for releasing used resources.
+     * <p>Initializes manager.</p>
+     * <p> This method is called by {@link Core} class after the manager is added to system and its not recommended to call it externally.</p>
      */
-    void dispose();
+    void initialize();
 }

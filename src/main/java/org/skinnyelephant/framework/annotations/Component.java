@@ -20,7 +20,7 @@ import java.lang.annotation.*;
 
 /**
  * </p> Annotation designating class to be a Component. </p>
- * <p>If component contains resources that are required to be released it should also implement {@link org.skinnyelephant.framework.world.Disposable}</p>
+ * <p>If component contains resources that are required to be released it should also implement {@link org.skinnyelephant.framework.core.Disposable}</p>
  */
 @Documented
 @Target(value = ElementType.TYPE)

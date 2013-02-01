@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.skinnyelephant.framework.world;
+package org.skinnyelephant.framework.core;
 
 
 import java.util.HashMap;

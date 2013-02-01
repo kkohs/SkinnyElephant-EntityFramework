@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.skinnyelephant.framework.world;
+package org.skinnyelephant.framework.core;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
@@ -24,7 +24,9 @@ import org.skinnyelephant.framework.systems.EntitySystem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/** @author Kristaps Kohs */
+/**
+ * @author Kristaps Kohs
+ */
 public class EntityManagerTest {
     @Test
     public void testAddEntity() throws Exception {
