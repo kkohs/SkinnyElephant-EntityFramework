@@ -44,16 +44,16 @@ public class EntityManager implements Manager {
     private final Map<Long, Entity> entityMap = new HashMap<Long, Entity>();
     /** Support class for generating entity id and reusing them. */
     private final EntityIdGenerator entityIdGenerator = new EntityIdGeneratorImpl();
-    /** Reference to World class. */
-    private final World world;
+    /** Reference to Core class. */
+    private final Core core;
 
     /**
      * Constructor for creating Entity manager
      *
-     * @param world reference to {@link World} class
+     * @param core reference to {@link Core} class
      */
-    protected EntityManager(final World world) {
-        this.world = world;
+    protected EntityManager(final Core core) {
+        this.core = core;
     }
 
     @Override
@@ -157,7 +157,7 @@ public class EntityManager implements Manager {
         if (!initialized) {
             throw new IllegalStateException("Manager not initialized");
         }
-        for (EntitySystem system : world.getSystems()) {
+        for (EntitySystem system : core.getSystems()) {
             if ((system.getUsedComponents() & e.getComponentsIds()) == system.getUsedComponents()) {
                 systemCache.put(system, e);
             }
@@ -173,7 +173,7 @@ public class EntityManager implements Manager {
         if (!initialized) {
             throw new IllegalStateException("Manager not initialized");
         }
-        for (EntitySystem system : world.getSystems()) {
+        for (EntitySystem system : core.getSystems()) {
             if ((system.getUsedComponents() & e.getComponentsIds()) == system.getUsedComponents()) {
                 systemCache.remove(system, e);
             }
@@ -210,7 +210,7 @@ public class EntityManager implements Manager {
             throw new IllegalStateException("Manager not initialized");
         }
         if (!entityMap.containsKey(id)) {
-            throw new IllegalArgumentException("Entity with id " + id + " not registered.");
+            return null;
         }
         return entityMap.get(id);
     }
@@ -221,7 +221,7 @@ public class EntityManager implements Manager {
 
 
     public final ImmutableSet<Entity> getEntitiesByComponent(Class<?> componentType) {
-        long id = world.getComponentId(componentType);
+        long id = core.getComponentId(componentType);
         if (id == 0) return null;
         List<Entity> list = new ArrayList<Entity>();
         for (Entity e : entityMap.values()) {

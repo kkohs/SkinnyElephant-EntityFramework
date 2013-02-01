@@ -17,9 +17,10 @@
 package org.skinnyelephant.framework.systems;
 
 import com.google.common.collect.ImmutableSet;
+import org.skinnyelephant.framework.world.Core;
 import org.skinnyelephant.framework.world.Disposable;
 import org.skinnyelephant.framework.world.Entity;
-import org.skinnyelephant.framework.world.World;
+import org.skinnyelephant.framework.world.Manager;
 
 /**
  * Base abstract class for entity systems.
@@ -27,24 +28,33 @@ import org.skinnyelephant.framework.world.World;
  * @author Kristaps Kohs
  */
 public abstract class EntitySystem implements Disposable {
-    /** Bitmap of used components by this system. */
-    private long usedComponents;
-    /** Flag indicating if system is passive. */
-    private boolean passive;
-    /** Flag indicating if system processing is periodic */
-    private boolean periodic;
-    /** Period in which system is required to be processed. */
+    /**
+     * Period in which system is required to be processed.
+     */
     private final float period;
-    /** Accumulated delta time since last processing. */
+    /**
+     * Reference tho framework {@link org.skinnyelephant.framework.world.Core}.
+     */
+    protected Core core;
+    /**
+     * Bitmap of used components by this system.
+     */
+    private long usedComponents;
+    /**
+     * Flag indicating if system is passive.
+     */
+    private boolean passive;
+    /**
+     * Flag indicating if system processing is periodic
+     */
+    private boolean periodic;
+    /**
+     * Accumulated delta time since last processing.
+     */
     private float accumulatedDelta;
-    /** Reference tho framework {@link World}. */
-    protected World world;
-
 
     /**
      * Constructor for creating active entity system.
-     *
-     * @param world framework {@link World}
      */
     public EntitySystem() {
         this(false);
@@ -53,7 +63,6 @@ public abstract class EntitySystem implements Disposable {
     /**
      * Constructor for creating active/passive entity system.
      *
-     * @param world   framework {@link World}
      * @param passive flag weather or not system is passive.
      */
     public EntitySystem(boolean passive) {
@@ -63,7 +72,6 @@ public abstract class EntitySystem implements Disposable {
     /**
      * Constructor for creating active/passive entity system.
      *
-     * @param world    framework {@link World}
      * @param periodic flag indicating if system is periodic.
      * @param period   system processing period.
      */
@@ -74,7 +82,6 @@ public abstract class EntitySystem implements Disposable {
     /**
      * Constructor for creating active/passive and or periodic or not entity system.
      *
-     * @param world    framework {@link World}
      * @param passive  flag weather or not system is passive.
      * @param periodic flag indicating if system is periodic.
      * @param period   system processing period.
@@ -85,7 +92,9 @@ public abstract class EntitySystem implements Disposable {
         this.period = period;
     }
 
-    /** Abstract method for initializing system. */
+    /**
+     * Abstract method for initializing system.
+     */
     public abstract void initialize();
 
     /**
@@ -96,7 +105,7 @@ public abstract class EntitySystem implements Disposable {
     public abstract void processEntity(final Entity entity);
 
     /**
-     * Method for processing Immutable set of entities passed by framework {@link World}.
+     * Method for processing Immutable set of entities passed by framework {@link org.skinnyelephant.framework.world.Core}.
      *
      * @param entities set of entities to process.
      */
@@ -106,7 +115,9 @@ public abstract class EntitySystem implements Disposable {
         }
     }
 
-    /** Method for processing system. */
+    /**
+     * Method for processing system.
+     */
     public void processSystem() {
     }
 
@@ -116,7 +127,7 @@ public abstract class EntitySystem implements Disposable {
      * @param comp component type.
      */
     protected void addUsedComponent(final Class<?> comp) {
-        usedComponents |= world.getComponentId(comp);
+        usedComponents |= core.getComponentId(comp);
     }
 
     /**
@@ -162,7 +173,15 @@ public abstract class EntitySystem implements Disposable {
         return false;
     }
 
-    public final void setWorld(World world) {
-        this.world = world;
+    private <T extends Manager> T getManager(final Class<? extends Manager> type) {
+        return core.getManager(type);
+    }
+
+    private <T> T getComponent(final Entity e, final Class<?> type) {
+        return e.getComponent(type);
+    }
+
+    public final void setCore(Core core) {
+        this.core = core;
     }
 }

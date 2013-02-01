@@ -28,11 +28,11 @@ import static org.junit.Assert.assertNotNull;
 public class EntityManagerTest {
     @Test
     public void testAddEntity() throws Exception {
-        World world = new World();
-        world.initialize();
-        Entity e = new Entity(world);
-        Entity e2 = new Entity("player", world);
-        EntityManager manager = world.getEntityManager();
+        Core core = new Core();
+        core.initialize();
+        Entity e = new Entity(core);
+        Entity e2 = new Entity("player", core);
+        EntityManager manager = core.getEntityManager();
 
         manager.addEntity(e);
         manager.addEntity(e2);
@@ -48,11 +48,11 @@ public class EntityManagerTest {
 
     @Test
     public void testGetEntitiesForSystem() throws Exception {
-        World world = new World();
-        world.initialize();
-        Entity e = new Entity(world);
-        Entity e2 = new Entity(world);
-        EntityManager manager = world.getEntityManager();
+        Core core = new Core();
+        core.initialize();
+        Entity e = new Entity(core);
+        Entity e2 = new Entity(core);
+        EntityManager manager = core.getEntityManager();
         manager.addEntity(e);
         manager.addEntity(e2);
         e.addComponent(new TestComponent());
@@ -60,8 +60,8 @@ public class EntityManagerTest {
         e2.addComponent(new TestComponent2());
         EntitySystem system = new TestSystem();
         EntitySystem system2 = new TestSystem2();
-        world.addSystem(system);
-        world.addSystem(system2);
+        core.addSystem(system);
+        core.addSystem(system2);
 
         ImmutableSet<Entity> set = manager.getEntitiesForSystem(system);
         ImmutableSet<Entity> set2 = manager.getEntitiesForSystem(system2);
@@ -76,46 +76,46 @@ public class EntityManagerTest {
 
     @Test
     public void testPerformance() {
-        World world = new World();
-        world.initialize();
+        Core core = new Core();
+        core.initialize();
         EntitySystem system = new TestSystem();
-        world.addSystem(new TestSystem2());
-        world.addSystem(system);
+        core.addSystem(new TestSystem2());
+        core.addSystem(system);
 
         for (int i = 0; i < 1000; i++) {
-            world.createEntity().addComponent(new TestComponent());
+            core.createEntity().addComponent(new TestComponent());
         }
         for (int i = 0; i < 5000; i++) {
-            world.createEntity().addComponent(new TestComponent()).addComponent(new TestComponent2());
+            core.createEntity().addComponent(new TestComponent()).addComponent(new TestComponent2());
         }
         long t = System.currentTimeMillis();
-        world.process();
+        core.process();
 
         System.out.println("Process time " + (System.currentTimeMillis() - t));
         t = System.currentTimeMillis();
-        world.process();
+        core.process();
 
         System.out.println("Process time " + (System.currentTimeMillis() - t));
         t = System.currentTimeMillis();
-        world.createEntity().addComponent(new TestComponent());
+        core.createEntity().addComponent(new TestComponent());
         for (int i = 0; i < 1500; i++) {
-            world.createEntity().addComponent(new TestComponent());
+            core.createEntity().addComponent(new TestComponent());
 
-            world.createEntity().addComponent(new TestComponent()).addComponent(new TestComponent2());
+            core.createEntity().addComponent(new TestComponent()).addComponent(new TestComponent2());
         }
-        world.process();
+        core.process();
         System.out.println("Added new entities, Process time " + (System.currentTimeMillis() - t));
         t = System.currentTimeMillis();
         for (int i = 0; i < 1500; i++) {
-            world.removeEntity((long) i);
+            core.removeEntity((long) i);
         }
-        world.process();
+        core.process();
 
         System.out.println("Process time " + (System.currentTimeMillis() - t));
 
         t = System.currentTimeMillis();
 
-        world.dispose();
+        core.dispose();
         System.out.println("Dispose time " + (System.currentTimeMillis() - t));
 
     }

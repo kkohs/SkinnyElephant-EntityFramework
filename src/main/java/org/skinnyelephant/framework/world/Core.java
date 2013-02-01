@@ -27,36 +27,54 @@ import java.util.*;
  *
  * @author Kristaps Kohs
  */
-public final class World implements Disposable {
-    /** Flag indicating if world has been initialized. */
-    private boolean initialized;
-    /** List of systems in this world. */
+public final class Core implements Disposable {
+    /**
+     * List of systems in this core.
+     */
     private final List<EntitySystem> systems;
-    /** Map containing all managers of this world. */
+    /**
+     * Map containing all managers of this core.
+     */
     private final Map<Class<? extends Manager>, Manager> managers = new HashMap<Class<? extends Manager>, Manager>();
-    /** Manager responsible for managing components. */
+    /**
+     * Flag indicating if core has been initialized.
+     */
+    private boolean initialized;
+    /**
+     * Manager responsible for managing components.
+     */
     private ComponentManager componentManager;
-    /** Manager responsible for managing entities. */
+    /**
+     * Manager responsible for managing entities.
+     */
     private EntityManager entityManager;
+    /**
+     * Manager responsible for pooling entities
+     */
+    private PoolManager poolManager;
 
-    /** Constructor for creating framework world. */
-    public World() {
+    /**
+     * Constructor for creating framework core.
+     */
+    public Core() {
         this.systems = new ArrayList<EntitySystem>();
         this.componentManager = new ComponentManager();
         this.entityManager = new EntityManager(this);
+        this.poolManager = new PoolManager(this);
     }
 
     /**
-     * <p>Initializes world.</p>
-     * <p>In this method all packages are scanned for classes containing annotation {@link Component} and registered into world.</p>
+     * <p>Initializes core.</p>
+     * <p>In this method all packages are scanned for classes containing annotation {@link Component} and registered into core.</p>
      * <p>Also {@link EntityManager} and {@link org.skinnyelephant.framework.world.ComponentManager#initialize()}  method is called.</p>
      */
     public final void initialize() {
         if (initialized) {
-            throw new IllegalStateException("World has been initialized already");
+            throw new IllegalStateException("Core has been initialized already");
         }
         entityManager.initialize();
         componentManager.initialize();
+        poolManager.initialize();
         Reflections reflection = new Reflections("");
         Set<Class<?>> components = reflection.getTypesAnnotatedWith(Component.class);
 
@@ -68,15 +86,15 @@ public final class World implements Disposable {
     }
 
     /**
-     * <p>Main {@link World} processing method.</p>
+     * <p>Main {@link Core} processing method.</p>
      * <p>Iterates through all {@link EntitySystem} and retrieves required entities and passes them to system processing.</p>
      *
-     * @deprecated use {@link World#process(float)} instead for periodic system processing support.
+     * @deprecated use {@link Core#process(float)} instead for periodic system processing support.
      */
     @Deprecated
     public final void process() {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         for (EntitySystem system : systems) {
             system.processSystem();
@@ -87,14 +105,14 @@ public final class World implements Disposable {
     }
 
     /**
-     * <p>Main {@link World} processing method.</p>
+     * <p>Main {@link Core} processing method.</p>
      * <p>Iterates through all {@link EntitySystem} and retrieves required entities and passes them to system processing.</p>
      *
      * @param delta delta time.
      */
     public final void process(final float delta) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
 
         for (EntitySystem system : systems) {
@@ -115,15 +133,15 @@ public final class World implements Disposable {
     }
 
     /**
-     * Method for adding {@link EntitySystem} to {@link World}, and also calls {@link org.skinnyelephant.framework.systems.EntitySystem#initialize()} method.
+     * Method for adding {@link EntitySystem} to {@link Core}, and also calls {@link org.skinnyelephant.framework.systems.EntitySystem#initialize()} method.
      *
-     * @param system {@link EntitySystem} to add to {@link World}.
+     * @param system {@link EntitySystem} to add to {@link Core}.
      */
     public final void addSystem(final EntitySystem system) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
-        system.setWorld(this);
+        system.setCore(this);
         system.initialize();
         systems.add(system);
     }
@@ -136,64 +154,78 @@ public final class World implements Disposable {
      */
     public final long getComponentId(final Class<?> comp) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         return componentManager.getComponentId(comp);
     }
 
     /**
-     * Creates {@link Entity} without reference and registers it to {@link World}
+     * Creates {@link Entity} without reference and registers it to {@link Core}
      *
      * @return Created entity.
      */
     public final Entity createEntity() {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         return createEntity(null);
     }
 
     /**
-     * Creates {@link Entity} with reference and registers it to {@link World}
+     * Creates {@link Entity} with reference and registers it to {@link Core}
      *
      * @param reference Entity reference
      * @return Created entity.
      */
     public final Entity createEntity(final String reference) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         Entity e = new Entity(reference, this);
         entityManager.addEntity(e);
         return e;
     }
 
+    public final Entity createPooledEntity(Class<?>... components) {
+        Entity e = poolManager.createPooledEntity(components);
+        if (entityManager.getEntity(e.getEntityId()) == null) {
+            entityManager.addEntity(e);
+        }
+        return e;
+    }
+
     /**
-     * Removes {@link Entity} with given reference from  {@link World}
+     * Removes {@link Entity} with given reference from  {@link Core}
      *
      * @param reference Entity reference
      * @return Created entity.
      */
     public final Entity removeEntity(final String reference) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         Entity e = entityManager.getEntity(reference);
+        if (e.isPooled()) {
+            poolManager.destroyPooledEntity(e);
+        }
         entityManager.removeEntity(e);
         return e;
     }
 
     /**
-     * Removes {@link Entity} with given id from  {@link World}
+     * Removes {@link Entity} with given id from  {@link Core}
      *
      * @param id Entity id
      * @return Created entity.
      */
     public final Entity removeEntity(final long id) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         Entity e = entityManager.getEntity(id);
+        if (e.isPooled()) {
+            poolManager.destroyPooledEntity(e);
+        }
         entityManager.removeEntity(e);
         return e;
     }
@@ -205,9 +237,21 @@ public final class World implements Disposable {
      */
     public final EntityManager getEntityManager() {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         return entityManager;
+    }
+
+    /**
+     * Setter for {@link EntityManager}
+     *
+     * @param manager {@link EntityManager} to set.
+     */
+    public final void setEntityManager(final EntityManager manager) {
+        if (!initialized) {
+            throw new IllegalStateException("Core has not been initialized!");
+        }
+        this.entityManager = manager;
     }
 
     /**
@@ -217,7 +261,7 @@ public final class World implements Disposable {
      */
     public final List<EntitySystem> getSystems() {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         return systems;
     }
@@ -229,22 +273,9 @@ public final class World implements Disposable {
      */
     public final ComponentManager getComponentManager() {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         return componentManager;
-    }
-
-    /**
-     * Method for removing {@link EntitySystem} from this world. Also calls {@link EntitySystem} destroy() method.
-     *
-     * @param system to remove.
-     */
-    public final void removeSystem(final EntitySystem system) {
-        if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
-        }
-        systems.remove(system);
-        system.dispose();
     }
 
     /**
@@ -254,32 +285,33 @@ public final class World implements Disposable {
      */
     public final void setComponentManager(final ComponentManager manager) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         this.componentManager = manager;
     }
 
     /**
-     * Setter for {@link EntityManager}
+     * Method for removing {@link EntitySystem} from this core. Also calls {@link EntitySystem} destroy() method.
      *
-     * @param manager {@link EntityManager} to set.
+     * @param system to remove.
      */
-    public final void setEntityManager(final EntityManager manager) {
+    public final void removeSystem(final EntitySystem system) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
-        this.entityManager = manager;
+        systems.remove(system);
+        system.dispose();
     }
 
     /**
-     * Method for adding {@link Manager} to this world.
+     * Method for adding {@link Manager} to this core.
      *
      * @param manager {@link Manager}  to add.
      * @param <T>     class that implements {@link Manager}.
      */
     public final <T extends Manager> void addManager(final T manager) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         manager.initialize();
         managers.put(manager.getClass(), manager);
@@ -294,19 +326,19 @@ public final class World implements Disposable {
     @SuppressWarnings("unchecked")
     public final <T extends Manager> T getManager(final Class<? extends Manager> type) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         return (T) managers.get(type);
     }
 
     /**
-     * Method for removing manager from this world.
+     * Method for removing manager from this core.
      *
      * @param type Manager class to remove.
      */
     public final void removeManager(final Class<? extends Manager> type) {
         if (!initialized) {
-            throw new IllegalStateException("World has not been initialized!");
+            throw new IllegalStateException("Core has not been initialized!");
         }
         Manager m = managers.get(type);
         m.dispose();
@@ -316,10 +348,12 @@ public final class World implements Disposable {
     @Override
     public final void dispose() {
         if (!initialized) {
-            throw new IllegalStateException("World is not initialized.");
+            throw new IllegalStateException("Core is not initialized.");
         }
         entityManager.dispose();
         componentManager.dispose();
+        poolManager.dispose();
+
         for (Manager manager : managers.values()) {
             manager.dispose();
         }

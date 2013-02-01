@@ -32,30 +32,32 @@ public final class Entity implements Disposable {
     private long eID;
     /** Entity reference. */
     private String reference;
-    /** Reference to framework {@link World} */
-    private World world;
+    /** Reference to framework {@link Core} */
+    private Core core;
     /** Map of used components. */
     private Map<Class<?>, Object> components;
+    /**Flag indicating whether entity should be pooled.*/
+    private boolean isPooled;
 
     /**
      * Constructor for creating entity with string reference.
      *
      * @param reference entity reference.
-     * @param world     framework {@link World}
+     * @param core     framework {@link Core}
      */
-    protected Entity(String reference, World world) {
+    protected Entity(String reference, Core core) {
         this.reference = reference;
         this.components = new HashMap<Class<?>, Object>();
-        this.world = world;
+        this.core = core;
     }
 
     /**
      * Constructor for creating entity without string reference.
      *
-     * @param world framework {@link World}
+     * @param core framework {@link Core}
      */
-    public Entity(final World world) {
-        this(null, world);
+    public Entity(final Core core) {
+        this(null, core);
     }
 
     /**
@@ -67,9 +69,9 @@ public final class Entity implements Disposable {
      */
     public <T> Entity addComponent(T component) {
         components.put(component.getClass(), component);
-        world.getEntityManager().removeFromCache(this);
-        componentsIds |= world.getComponentManager().getComponentId(component.getClass());
-        world.getEntityManager().addToCache(this);
+        core.getEntityManager().removeFromCache(this);
+        componentsIds |= core.getComponentManager().getComponentId(component.getClass());
+        core.getEntityManager().addToCache(this);
         return this;
     }
 
@@ -93,9 +95,9 @@ public final class Entity implements Disposable {
     public void removeComponent(Class<?> type) {
         Object component = components.get(type);
         if (component != null) {
-            world.getEntityManager().removeFromCache(this);
-            componentsIds ^= world.getComponentManager().getComponentId(component.getClass());
-            world.getEntityManager().addToCache(this);
+            core.getEntityManager().removeFromCache(this);
+            componentsIds ^= core.getComponentManager().getComponentId(component.getClass());
+            core.getEntityManager().addToCache(this);
         }
     }
 
@@ -109,12 +111,12 @@ public final class Entity implements Disposable {
     }
 
     /**
-     * Getter for framework {@link World} linked to this entity.
+     * Getter for framework {@link Core} linked to this entity.
      *
-     * @return framework {@link World}
+     * @return framework {@link Core}
      */
-    public World getWorld() {
-        return world;
+    public Core getCore() {
+        return core;
     }
 
     /**
@@ -142,6 +144,14 @@ public final class Entity implements Disposable {
      */
     public void setEntityId(long eID) {
         this.eID = eID;
+    }
+
+    public boolean isPooled() {
+        return isPooled;
+    }
+
+    public void setPooled(boolean pooled) {
+        isPooled = pooled;
     }
 
     @Override
