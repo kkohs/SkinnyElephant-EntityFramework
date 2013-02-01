@@ -40,9 +40,35 @@ public class PoolManagerTest {
             core.removeEntity(entity.getEntityId());
         }
 
+        entities.clear();
+
         core.process(10000);
         core.process(10000);
         core.process(10000);
+        for(int i  = 0 ; i < 24 ;i++  ) {
+            entities.add(core.createPooledEntity(TestCompOne.class));
+        }
+
+        for(int i  = 0 ; i < 64 ;i++  ) {
+            entities.add(core.createPooledEntity(TestCompOne.class));
+        }
+
+        for(Entity entity : entities) {
+            core.removeEntity(entity.getEntityId());
+        }
+        core.process(10000);
+        core.process(25000);
+        core.process(25000);
+        core.process(25000);
+        core.process(25000);
+        core.createPooledEntity(TestCompOne.class);
+        core.createPooledEntity(TestCompOne.class);
+        core.createPooledEntity(TestCompOne.class);
+        core.process(25000);
+        core.process(25000);
+        core.process(25000);
+        core.process(25000);
+        core.process(25000);
 
     }
 

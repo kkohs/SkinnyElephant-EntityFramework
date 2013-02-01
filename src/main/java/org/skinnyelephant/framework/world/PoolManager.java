@@ -43,6 +43,8 @@ public class PoolManager implements Manager {
         this.frameWorkCore = frameWorkCore;
     }
 
+    private int singleMaxPoolSize = 512;
+
     @Override
     public void initialize() {
         if (initialized) {
@@ -69,7 +71,7 @@ public class PoolManager implements Manager {
                 return e;
             }
         } else {
-            pooledEntities.put(componentIds, new EntityPool());
+            pooledEntities.put(componentIds, new EntityPool(singleMaxPoolSize));
             return createEntityWithComponents(components);
         }
     }
@@ -82,7 +84,7 @@ public class PoolManager implements Manager {
         if (pooledEntities.containsKey(componentIds)) {
             pooledEntities.get(componentIds).put(entity);
         } else {
-            pooledEntities.put(componentIds, new EntityPool());
+            pooledEntities.put(componentIds, new EntityPool(singleMaxPoolSize));
             pooledEntities.get(componentIds).put(entity);
         }
     }
@@ -138,4 +140,11 @@ public class PoolManager implements Manager {
         pooledEntities.clear();
     }
 
+    public int getSingleMaxPoolSize() {
+        return singleMaxPoolSize;
+    }
+
+    public void setSingleMaxPoolSize(int singleMaxPoolSize) {
+        this.singleMaxPoolSize = singleMaxPoolSize;
+    }
 }
