@@ -130,6 +130,8 @@ public final class Core implements Disposable {
                 }
             }
         }
+
+        poolManager.cleanUpPool(delta);
     }
 
     /**
@@ -252,6 +254,20 @@ public final class Core implements Disposable {
             throw new IllegalStateException("Core has not been initialized!");
         }
         this.entityManager = manager;
+    }
+
+    public PoolManager getPoolManager() {
+        if (!initialized) {
+            throw new IllegalStateException("Core has not been initialized!");
+        }
+        return poolManager;
+    }
+
+    public void setPoolManager(PoolManager poolManager) {
+        if (!initialized) {
+            throw new IllegalStateException("Core has not been initialized!");
+        }
+        this.poolManager = poolManager;
     }
 
     /**

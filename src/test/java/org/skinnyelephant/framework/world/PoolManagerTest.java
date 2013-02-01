@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.skinnyelephant.framework.annotations.Component;
 import org.skinnyelephant.framework.systems.EntitySystem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Date: 13.1.2
  * Time: 13:08
@@ -27,8 +30,19 @@ public class PoolManagerTest {
         core.process(0);
         core.removeEntity(e3.getEntityId());
         core.process(0);
+         core.getPoolManager().setRemovalPeriod(20);
+        List<Entity> entities = new ArrayList<Entity>();
+        for(int i  = 0 ; i < 64 ;i++  ) {
+           entities.add(core.createPooledEntity(TestCompOne.class));
+        }
 
-        e3.getComponentsIds();
+        for(Entity entity : entities) {
+            core.removeEntity(entity.getEntityId());
+        }
+
+        core.process(10000);
+        core.process(10000);
+        core.process(10000);
 
     }
 

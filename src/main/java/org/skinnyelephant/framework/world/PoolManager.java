@@ -13,7 +13,6 @@ import java.util.Map;
  * @author Kristaps Kohs
  */
 public class PoolManager implements Manager {
-
     /**
      * Core class.
      */
@@ -22,14 +21,22 @@ public class PoolManager implements Manager {
      * Map containing Entity pool with specific id.
      */
     private Map<Long, EntityPool> pooledEntities;
-
     /**
      * Flag indicating if manager has been initialized.
      */
     private boolean initialized;
+    /**
+     * Period in which pool should be cleaned.
+     */
+    private float removalPeriod;
+    /**
+     * Current time.
+     */
+    private float accumulatedDelta;
 
     /**
      * Created new Entity Pool manager.
+     *
      * @param frameWorkCore frameworks core.
      */
     public PoolManager(Core frameWorkCore) {
@@ -56,7 +63,7 @@ public class PoolManager implements Manager {
 
         if (pooledEntities.containsKey(componentIds)) {
             Entity e = pooledEntities.get(componentIds).get();
-            if(e == null) {
+            if (e == null) {
                 return createEntityWithComponents(components);
             } else {
                 return e;
@@ -72,10 +79,10 @@ public class PoolManager implements Manager {
             throw new IllegalStateException("Manager not initialized");
         }
         final long componentIds = entity.getComponentsIds();
-        if(pooledEntities.containsKey(componentIds)) {
+        if (pooledEntities.containsKey(componentIds)) {
             pooledEntities.get(componentIds).put(entity);
         } else {
-            pooledEntities.put(componentIds,new EntityPool());
+            pooledEntities.put(componentIds, new EntityPool());
             pooledEntities.get(componentIds).put(entity);
         }
     }
@@ -90,10 +97,37 @@ public class PoolManager implements Manager {
             try {
                 e.addComponent(component.newInstance());
             } catch (Exception e1) {
-                throw new IllegalStateException("Failed to create pooled component",e1 );
+                throw new IllegalStateException("Failed to create pooled component", e1);
             }
         }
         return e;
+    }
+
+    /**
+     * Cleans up entity pool if period delta > {@link PoolManager#removalPeriod}.
+     * @param delta time passed in milliseconds.
+     */
+    public void cleanUpPool(final float delta) {
+        if (!initialized) {
+            throw new IllegalStateException("Manager not initialized");
+        }
+        if (removalPeriod <= 0) {
+            return;
+        }
+        if((accumulatedDelta += (delta * .001f)) >= removalPeriod) {
+            for(EntityPool entityPool : pooledEntities.values()) {
+                entityPool.releaseFromPool();
+            }
+            accumulatedDelta = 0;
+        }
+    }
+
+    /**
+     * Sets removal period in seconds.
+     * @param removalPeriod period in seconds
+     */
+    public void setRemovalPeriod(float removalPeriod) {
+        this.removalPeriod = removalPeriod;
     }
 
     @Override
@@ -101,7 +135,7 @@ public class PoolManager implements Manager {
         if (!initialized) {
             throw new IllegalStateException("Manager not initialized");
         }
-          pooledEntities.clear();
+        pooledEntities.clear();
     }
 
 }
