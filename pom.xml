@@ -35,13 +35,7 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <id>Afrika</id>
-            <name>Afrika-releases</name>
-            <url>http://84.237.206.96:8989/artifactory/libgdx/</url>
-        </repository>
-    </repositories>
+
 
     <dependencies>
         <dependency>
