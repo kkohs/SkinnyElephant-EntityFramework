@@ -30,7 +30,7 @@ public class EntityPool {
      */
     public Entity get() {
         if(entities.size() <= 0) return null;
-        return entities.removeFirst();
+        return entities.removeLast();
     }
 
 
@@ -50,7 +50,7 @@ public class EntityPool {
 
        int removed = 0;
         while (removed < ONE_STEP_REMOVAL) {
-            entities.removeLast();
+            entities.removeFirst();
             removed ++;
         }
     }
