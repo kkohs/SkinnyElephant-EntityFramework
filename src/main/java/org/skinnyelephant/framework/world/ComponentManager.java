@@ -25,9 +25,13 @@ import java.util.Map;
  * @author Kristaps Kohs
  */
 public class ComponentManager implements Manager {
-    /** Flag if manager is initialized. */
+    /**
+     * Flag if manager is initialized.
+     */
     private boolean initialized;
-    /** Map containing all component ids. */
+    /**
+     * Map containing all component ids.
+     */
     private Map<Class, Long> componentIds;
 
     /**

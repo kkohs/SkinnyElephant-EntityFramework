@@ -16,7 +16,9 @@
 
 package org.skinnyelephant.framework.world;
 
-/** Interface for managers in this framework. */
+/**
+ * Interface for managers in this framework.
+ */
 public interface Manager extends Disposable {
     /**
      * <p>Initializes manager.</p>

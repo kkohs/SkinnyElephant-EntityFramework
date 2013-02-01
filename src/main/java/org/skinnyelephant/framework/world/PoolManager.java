@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012  Kristaps Kohs<kristaps.kohs@gmail.com>
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package org.skinnyelephant.framework.world;
 
 import org.skinnyelephant.framework.util.EntityPool;
@@ -107,6 +123,7 @@ public class PoolManager implements Manager {
 
     /**
      * Cleans up entity pool if period delta > {@link PoolManager#removalPeriod}.
+     *
      * @param delta time passed in milliseconds.
      */
     public void cleanUpPool(final float delta) {
@@ -116,8 +133,8 @@ public class PoolManager implements Manager {
         if (removalPeriod <= 0) {
             return;
         }
-        if((accumulatedDelta += (delta * .001f)) >= removalPeriod) {
-            for(EntityPool entityPool : pooledEntities.values()) {
+        if ((accumulatedDelta += (delta * .001f)) >= removalPeriod) {
+            for (EntityPool entityPool : pooledEntities.values()) {
                 entityPool.releaseFromPool();
             }
             accumulatedDelta = 0;
@@ -126,6 +143,7 @@ public class PoolManager implements Manager {
 
     /**
      * Sets removal period in seconds.
+     *
      * @param removalPeriod period in seconds
      */
     public void setRemovalPeriod(float removalPeriod) {

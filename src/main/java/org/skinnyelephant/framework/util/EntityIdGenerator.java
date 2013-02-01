@@ -16,7 +16,9 @@
 
 package org.skinnyelephant.framework.util;
 
-/** Entity ID generator interface. */
+/**
+ * Entity ID generator interface.
+ */
 public interface EntityIdGenerator {
     /**
      * Method for getting unique id.
@@ -32,6 +34,8 @@ public interface EntityIdGenerator {
      */
     public void removeId(long id);
 
-    /** Method for resetting generator. */
+    /**
+     * Method for resetting generator.
+     */
     public void reset();
 }

@@ -24,12 +24,18 @@ import java.util.LinkedList;
  * @author Kristaps Kohs
  */
 public class EntityIdGeneratorImpl implements EntityIdGenerator {
-    /** List of already generated but not used ids. */
+    /**
+     * List of already generated but not used ids.
+     */
     private final LinkedList<Long> idList;
-    /** Next id to be assigned. */
+    /**
+     * Next id to be assigned.
+     */
     private long nextId;
 
-    /** Constructor for this generator. */
+    /**
+     * Constructor for this generator.
+     */
     public EntityIdGeneratorImpl() {
         idList = new LinkedList<Long>();
     }

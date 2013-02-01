@@ -34,17 +34,29 @@ import java.util.Map;
  * @author Kristaps Kohs
  */
 public class EntityManager implements Manager {
-    /** Flag if manager is initialized* */
+    /**
+     * Flag if manager is initialized*
+     */
     private boolean initialized;
-    /** Cache containing Immutable Set of entities for each Entity System. */
+    /**
+     * Cache containing Immutable Set of entities for each Entity System.
+     */
     private final Multimap<EntitySystem, Entity> systemCache = HashMultimap.create();
-    /** Map of string id referenced entities. */
+    /**
+     * Map of string id referenced entities.
+     */
     private final Map<String, Entity> referencedEntities = new HashMap<String, Entity>();
-    /** Map containing all present entities. */
+    /**
+     * Map containing all present entities.
+     */
     private final Map<Long, Entity> entityMap = new HashMap<Long, Entity>();
-    /** Support class for generating entity id and reusing them. */
+    /**
+     * Support class for generating entity id and reusing them.
+     */
     private final EntityIdGenerator entityIdGenerator = new EntityIdGeneratorImpl();
-    /** Reference to Core class. */
+    /**
+     * Reference to Core class.
+     */
     private final Core core;
 
     /**
@@ -80,7 +92,9 @@ public class EntityManager implements Manager {
         initialized = false;
     }
 
-    /** Cleans up all entities. */
+    /**
+     * Cleans up all entities.
+     */
     public void cleanUp() {
         for (Entity e : entityMap.values()) {
             removeEntity(e);

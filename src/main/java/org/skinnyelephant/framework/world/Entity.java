@@ -26,24 +26,36 @@ import java.util.Map;
  * @author Kristaps Kohs
  */
 public final class Entity implements Disposable {
-    /** Bitmap of used components. */
+    /**
+     * Bitmap of used components.
+     */
     private long componentsIds;
-    /** Unique Entity ID. */
+    /**
+     * Unique Entity ID.
+     */
     private long eID;
-    /** Entity reference. */
+    /**
+     * Entity reference.
+     */
     private String reference;
-    /** Reference to framework {@link Core} */
+    /**
+     * Reference to framework {@link Core}
+     */
     private Core core;
-    /** Map of used components. */
+    /**
+     * Map of used components.
+     */
     private Map<Class<?>, Object> components;
-    /**Flag indicating whether entity should be pooled.*/
+    /**
+     * Flag indicating whether entity should be pooled.
+     */
     private boolean isPooled;
 
     /**
      * Constructor for creating entity with string reference.
      *
      * @param reference entity reference.
-     * @param core     framework {@link Core}
+     * @param core      framework {@link Core}
      */
     protected Entity(String reference, Core core) {
         this.reference = reference;
