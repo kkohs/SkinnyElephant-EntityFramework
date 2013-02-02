@@ -229,11 +229,21 @@ public class EntityManager implements Manager {
         return entityMap.get(id);
     }
 
+    /**
+     * Returns all entities in current framework.
+     *
+     * @return immutable set of entities.
+     */
     public final ImmutableSet<Entity> getAllEntities() {
         return ImmutableSet.copyOf(entityMap.values());
     }
 
-
+    /**
+     * Returns all entities with given component.
+     *
+     * @param componentType component class.
+     * @return Immutable set of entities with provided component type.
+     */
     public final ImmutableSet<Entity> getEntitiesByComponent(Class<?> componentType) {
         long id = core.getComponentId(componentType);
         if (id == 0) return null;

@@ -70,6 +70,12 @@ public class PoolManager implements Manager {
         initialized = true;
     }
 
+    /**
+     * Creates or retrieves entity with given array of components from pool.
+     *
+     * @param components array of components
+     * @return Entity from pool.
+     */
     protected Entity createPooledEntity(Class<?>... components) {
         if (!initialized) {
             throw new IllegalStateException("Manager not initialized");
@@ -92,6 +98,11 @@ public class PoolManager implements Manager {
         }
     }
 
+    /**
+     * Destroys entity and returns it back to pool for later use.
+     *
+     * @param entity to be destroyed.
+     */
     public void destroyPooledEntity(Entity entity) {
         if (!initialized) {
             throw new IllegalStateException("Manager not initialized");

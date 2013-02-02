@@ -29,11 +29,11 @@ import org.skinnyelephant.framework.core.Manager;
  */
 public abstract class EntitySystem implements Disposable {
     /**
-     * Period in which system is required to be processed.
+     * Period in which system is required to be processed in milliseconds.
      */
     private final float period;
     /**
-     * Reference tho framework {@link org.skinnyelephant.framework.core.Core}.
+     * Reference to framework {@link org.skinnyelephant.framework.core.Core}.
      */
     protected Core core;
     /**
@@ -70,7 +70,7 @@ public abstract class EntitySystem implements Disposable {
     }
 
     /**
-     * Constructor for creating active/passive entity system.
+     * Constructor for creating active entity system with processing period.
      *
      * @param periodic flag indicating if system is periodic.
      * @param period   system processing period.
