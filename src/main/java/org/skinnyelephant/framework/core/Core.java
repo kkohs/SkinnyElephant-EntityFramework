@@ -189,6 +189,9 @@ public final class Core implements Disposable {
     }
 
     public final Entity createPooledEntity(Class<?>... components) {
+        if (!initialized) {
+            throw new IllegalStateException("Core has not been initialized!");
+        }
         Entity e = poolManager.createPooledEntity(components);
         if (entityManager.getEntity(e.getEntityId()) == null) {
             entityManager.addEntity(e);
