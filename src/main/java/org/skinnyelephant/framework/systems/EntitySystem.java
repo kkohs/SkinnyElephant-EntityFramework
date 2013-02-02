@@ -173,11 +173,11 @@ public abstract class EntitySystem implements Disposable {
         return false;
     }
 
-    private <T extends Manager> T getManager(final Class<? extends Manager> type) {
+    protected <T extends Manager> T getManager(final Class<? extends Manager> type) {
         return core.getManager(type);
     }
 
-    private <T> T getComponent(final Entity e, final Class<?> type) {
+    protected <T> T getComponent(final Entity e, final Class<?> type) {
         return e.getComponent(type);
     }
 
